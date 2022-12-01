@@ -10,7 +10,7 @@ const onSubmit = () => {
 }
 </script>
 <template>
-  <div class="h-screen flex flex-col items-center justify-center">
+  <div class="h-full flex flex-col items-center justify-center">
     <form class="p-10 rounded-md border-4 border-gray-700" @submit="onSubmit">
       <h1 class="mb-5 text-3xl">Login</h1>
       <div>

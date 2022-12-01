@@ -72,7 +72,7 @@ const startGame = () => {
 }
 </script>
 <template>
-  <div class="h-screen flex flex-col items-center justify-center">
+  <div class="h-full flex flex-col items-center justify-center">
     <div class="text-3xl">
       {{ message || `Current Player: ${ currentPlayer }` }}
     </div>

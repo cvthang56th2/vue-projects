@@ -27,7 +27,7 @@ const reset = () => {
 }
 </script>
 <template>
-  <div class="h-screen flex flex-col items-center justify-center">
+  <div class="h-full flex flex-col items-center justify-center">
     <div class="text-3xl">Timer: {{time}}</div>
     <div class="text-9xl mt-5">{{clicked}}</div>
     <div class="mt-20">
