@@ -8,7 +8,7 @@
     <div>
       <RouterLink to="/" class="p-3 text-lg text-purple-500 font-semibold">Vue Projects</RouterLink>
     </div>
-    <div class="flex-1">
+    <div class="flex-1 overflow-y-auto">
       <router-view></router-view>
     </div>
   </div>
