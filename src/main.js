@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { createPinia } from 'pinia'
 import './style.css'
 import App from './App.vue'
 import Home from './pages/Home.vue'
@@ -10,6 +11,8 @@ import StopWatch from './pages/StopWatch.vue'
 import ChatApp from './pages/ChatApp.vue'
 
 const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
 
 const routes = [
   { path: '/', component: Home },

@@ -12,7 +12,6 @@ const firebaseConfigDev = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 }
-
 /** config firebase dev */
 const firebaseDev = initializeApp(firebaseConfigDev)
 const db = getFirestore(firebaseDev)

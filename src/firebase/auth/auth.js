@@ -1,4 +1,4 @@
-import { auth } from '@/firebase/config'
+import { auth } from '../config'
 import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
@@ -8,15 +8,22 @@ import {
   signInAnonymously,
   onAuthStateChanged,
   signOut,
-  sendEmailVerification,
 } from 'firebase/auth'
+import UserServices from '../user/user'
+
 class AuthServices {
   onAuthStateChanged(cb) {
     return onAuthStateChanged(auth, cb)
   }
-  async register(email, password) {
+  async register(email, password, options = {}) {
     const res = await createUserWithEmailAndPassword(auth, email, password)
-    await sendEmailVerification(res.user).then(res => console.log('test')).catch('send verify')
+    const { userName } = options
+    const { uid } = res.user
+    UserServices.create(uid, {
+      email,
+      uid,
+      userName
+    })
     return res
   }
 

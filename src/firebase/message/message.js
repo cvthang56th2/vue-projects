@@ -3,7 +3,7 @@ import {
   doc,
   updateDoc,
 } from 'firebase/firestore'
-import { db } from '../../config'
+import { db } from '../config'
 import { uid } from 'uid'
 
 const MESSAGEHISTORY = 'messageHistory'

@@ -8,8 +8,8 @@ import {
   collection,
   query,
 } from 'firebase/firestore'
-import { db } from '../../config'
-import { snapshotToArray } from '../../../utils'
+import { db } from '../config'
+import { snapshotToArray } from '../../utils/utils'
 const USERS = 'users'
 class userServices {
   // #region user profile
