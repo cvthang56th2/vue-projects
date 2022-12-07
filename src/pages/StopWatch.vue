@@ -26,7 +26,7 @@ const toggleStart = () => {
 }
 </script>
 <template>
-  <div class="h-screen flex flex-col items-center justify-center">
+  <div class="h-full flex flex-col items-center justify-center">
     <div class="flex items-end">
       <button class="" :class="mode === 'stopwatch' ? 'text-3xl' : 'text-xl'" @click="mode = 'stopwatch'">Stopwatch</button>
       <button class=" ml-10" :class="mode === 'timer' ? 'text-3xl' : 'text-xl'" @click="mode = 'timer'">Timer</button>
