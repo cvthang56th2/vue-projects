@@ -2,9 +2,9 @@ import {
   setDoc,
   doc,
   Timestamp,
+  onSnapshot,
   getDoc,
   getDocs,
-  where,
   collection,
   query,
 } from 'firebase/firestore'
@@ -34,9 +34,21 @@ class userServices {
     }
   }
 
+  snapshotUsers (callback) {
+    const q = query(collection(db, 'users'))
+    if (typeof this.unsubscribeUsers === 'function') {
+      this.unsubscribeUsers()
+    }
+    this.unsubscribeUsers = onSnapshot(q, querySnapshot => {
+      if (typeof callback === 'function')  {
+        callback(snapshotToArray(querySnapshot))
+      }
+    });
+  }
+
   async getAllUsers() {
     try {
-      const loadConfig = query(collection(db, 'users'), where('isDelete', '==', false))
+      const loadConfig = query(collection(db, 'users'))
       const querySnapshot = await getDocs(loadConfig)
       return snapshotToArray(querySnapshot)
     } catch (error) {
