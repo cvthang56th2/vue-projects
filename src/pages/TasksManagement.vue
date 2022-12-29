@@ -16,14 +16,18 @@ const showPopupCreateGroup = ref(false)
 const showPopupCreateTask = ref(false)
 const createGroup = () => {
   try {
-    if (!formCreateGroup.value.name) {
+    const { name } = formCreateGroup.value
+    if (!name) {
       Swal.fire('Error!', 'Invalid data', 'error')
       nextTick(() => {
         showPopupCreateGroup.value = true
       })
       return
     }
-    TaskServices.createTaskGroup(JSON.parse(JSON.stringify(formCreateGroup.value)))
+    TaskServices.createTaskGroup({
+      name,
+      sort: taskGroups.value.length
+    })
     formCreateGroup.value = {}
     showPopupCreateGroup.value = false
     Swal.fire('Added!', '', 'success')
@@ -72,7 +76,13 @@ const onMoveTask = (e, groupObj) => {
     })
   }
 }
+const onMoveGroup = () => {
+  for (const index in taskGroups.value) {
+    TaskServices.updateTaskGroup(taskGroups.value[index].id, { sort: Number(index) })
+  }
+}
 const mapTaskToGroup = () => {
+  taskGroups.value = taskGroups.value.sort((a, b) => a.sort > b.sort ? 1 : -1)
   taskGroups.value = taskGroups.value.map(e => {
     let groupTasks = tasks.value.filter(task => String(task.groupId) === String(e.id))
     if (e.lastSortTasks) {
@@ -104,6 +114,9 @@ const onBlurEditTaskField = field => {
   editing.value[field] = false
   if (field === 'name' && !formEditTask.value[field]) {
     formEditTask.value[field] = selectedTask.value[field]
+    return
+  }
+  if (formEditTask.value[field] === selectedTask.value[field]) {
     return
   }
   TaskServices.updateTask(formEditTask.value.id, { [field]: formEditTask.value[field] })
@@ -159,36 +172,44 @@ onMounted(() => {
           </form>
         </Popup>
       </div>
-      <div class="flex flex-nowrap -mr-2">
-        <div v-for="(groupObj, gIndex) in taskGroups" :key="`group-${gIndex}`" class="flex-[0_0_25%] px-2">
-          <div class="p-2  border-[1px] rounded-md">
-            <h3 class="text-2xl font-bold">{{ groupObj.name }}</h3>
-            <div class="mt-2 pt-2 border-t-2">
-              <draggable
-                :list="groupObj.tasks"
-                group="task"
-                class="list-group"
-                @change="onMoveTask($event, groupObj)"
-                itemKey="id"
-              >
-                <template #item="{ element }">
-                  <div class="list-group-item border-2 p-1 rounded-md mt-1 first:mt-0" @click="viewDetailTask(element)">
-                    {{ element.name }}
-                  </div>
+      <draggable
+        :list="taskGroups"
+        group="group"
+        class="flex flex-nowrap -mr-2"
+        itemKey="id"
+        @change="onMoveGroup($event)"
+      >
+        <template #item="{ element:groupObj }">
+          <div class="flex-[0_0_25%] px-2">
+            <div class="p-2  border-[1px] rounded-md">
+              <h3 class="text-2xl font-bold">{{ groupObj.name }}</h3>
+              <div class="mt-2 pt-2 border-t-2">
+                <draggable
+                  :list="groupObj.tasks"
+                  group="task"
+                  class="list-group"
+                  @change="onMoveTask($event, groupObj)"
+                  itemKey="id"
+                >
+                  <template #item="{ element }">
+                    <div class="list-group-item border-2 p-1 rounded-md mt-1 first:mt-0" @click="viewDetailTask(element)">
+                      {{ element.name }}
+                    </div>
+                  </template>
+                </draggable>
+                <template v-if="!(groupObj.tasks && groupObj.tasks.length)">
+                  No tasks.
                 </template>
-              </draggable>
-              <template v-if="!(groupObj.tasks && groupObj.tasks.length)">
-                No tasks.
-              </template>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </draggable>
     </div>
     <Popup v-if="selectedTask" v-model="showPopupDetail" hideButtons>
       <template #title>
         <div class="flex justify-between items-center mb-5">
-          <div class="overflow-x-auto text-xl font-bold">
+          <div class="overflow-x-auto text-xl font-bold flex-1 mr-2">
             <input v-if="editing['name']" v-model="formEditTask.name" type="text" class="border-2 w-full p-2 rounded-sm" placeholder="Enter name..." id="task-name-edit" @blur="onBlurEditTaskField('name')">
             <h2 v-else @click="openEditTaskField('name')">{{ formEditTask.name }}</h2>
           </div>
