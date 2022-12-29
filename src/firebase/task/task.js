@@ -109,6 +109,15 @@ class taskServices {
       }
     });
   }
+
+  async deleteTaskGroup(taskGroupId) {
+    try {
+      const ref = doc(db, TASK_GROUP, taskGroupId)
+      return deleteDoc(ref)
+    } catch (err) {
+      console.error('error delete task group', err)
+    }
+  }
 }
 
 export default new taskServices()

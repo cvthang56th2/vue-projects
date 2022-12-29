@@ -48,6 +48,24 @@ const deleteTask = () => {
     }
   })
 }
+const deleteTaskGroup = (groupObj, groupIndex) => {
+  Swal.fire({
+    title: 'Are you sure want to remove this item? This action cannot be undo.',
+    showCancelButton: true,
+    confirmButtonText: 'Remove',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      TaskServices.deleteTaskGroup(groupObj.id)
+      const groupIndex = taskGroups.value.findIndex(e => e.id === groupObj.id)
+      if (groupIndex !== -1) {
+        taskGroups.value.splice(groupIndex, 1)
+      }
+      for (const task of groupObj.tasks) {
+        TaskServices.updateTask(task.id, { groupId: taskGroups.value[0].id })
+      }
+    }
+  })
+}
 const createTask = () => {
   try {
     if (!formCreateTask.value.groupId || !formCreateTask.value.name) {
@@ -182,7 +200,10 @@ onMounted(() => {
         <template #item="{ element:groupObj }">
           <div class="flex-[0_0_25%] px-2">
             <div class="p-2  border-[1px] rounded-md">
-              <h3 class="text-2xl font-bold">{{ groupObj.name }}</h3>
+              <div class="flex justify-between items-center">
+                <h3 class="text-2xl font-bold">{{ groupObj.name }}</h3>
+                <button v-if="taskGroups.length > 1" class="py-2 px-3 text-sm rounded-md bg-red-400 text-white" @click="deleteTaskGroup(groupObj)">Delete</button>
+              </div>
               <div class="mt-2 pt-2 border-t-2">
                 <draggable
                   :list="groupObj.tasks"
