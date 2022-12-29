@@ -6,5 +6,6 @@
     <div class="mt-2"><RouterLink to="/tiktaktoe" class="underline text-blue-500 hover:no-underline">Tik Tak Toe Game</RouterLink></div>
     <div class="mt-2"><RouterLink to="/stopwatch" class="underline text-blue-500 hover:no-underline">Stop Watch</RouterLink></div>
     <div class="mt-2"><RouterLink to="/chat-app" class="underline text-blue-500 hover:no-underline">Chat App</RouterLink></div>
+    <div class="mt-2"><RouterLink to="/calculator" class="underline text-blue-500 hover:no-underline">Calculator</RouterLink></div>
   </div>
 </template>

@@ -7,8 +7,21 @@ const resultRef = ref(null)
 const operator = ref(null)
 const isGetResult = ref(false)
 const reset = () => {
-  arg1.value = ''
+  arg1.value = 0
   arg2.value = ''
+  operator.value = null
+  isGetResult.value = false
+}
+const computeValue = (button, value = '') => {
+  if (button === '.') {
+    if (String(value).includes('.')) {
+      return value
+    }
+    if (!String(value)) {
+      return `0${button}`
+    }
+  }
+  return `${value}${button}`
 }
 const onClickNumber = button => {
   if (isGetResult.value) {
@@ -16,28 +29,37 @@ const onClickNumber = button => {
     isGetResult.value = false
   }
   if (operator.value) {
-    arg2.value = `${arg2.value}${button}`
+    arg2.value = computeValue(button, arg2.value)
   } else {
     if (arg1.value === 0) {
       arg1.value = ''
     }
-    arg1.value = `${arg1.value}${button}`
+    arg1.value = computeValue(button, arg1.value)
   }
   nextTick(() => {
     resultRef.value.scrollLeft += 99999;
   })
 }
-const onClickRevert = button => {
+const onClickRevert = () => {
+  if (operator.value) {
+    arg2.value = arg2.value * -1
+  } else {
+    arg1.value = arg1.value * -1
+  }
 }
-const onClickDevice100 = button => {
+const onClickDevice100 = () => {
+  if (operator.value) {
+    arg2.value = arg2.value / 100
+  } else {
+    arg1.value = arg1.value / 100
+  }
 }
 const onClickOperator = button => {
+  isGetResult.value = false
   getResult()
   operator.value = button
 }
-const onClickComma = button => {
-}
-const getResult = () => {
+const getResult = (isClickedEqual = false) => {
   if (!arg2.value || !operator.value) {
     return
   }
@@ -56,8 +78,8 @@ const getResult = () => {
       break
   }
   arg2.value = ''
-  operator.value = null
-  isGetResult.value = true
+  operator.value = isClickedEqual ? null : operator.value
+  isGetResult.value = isClickedEqual
 }
 const onClickButton = button => {
   switch (button) {
@@ -86,13 +108,11 @@ const onClickButton = button => {
     case '7':
     case '8':
     case '9':
+    case '.':
       onClickNumber(button)
       break;
-    case ',':
-      onClickComma(button)
-      break;
     case '=':
-      getResult()
+      getResult(true)
       break;
     default:
       break;
@@ -133,7 +153,7 @@ const onClickButton = button => {
       </div>
       <div>
         <button class="btn bg-gray-100 !w-1/2" @click="onClickButton('0')">0</button>
-        <button class="btn bg-gray-100" @click="onClickButton(',')">,</button>
+        <button class="btn bg-gray-100" @click="onClickButton('.')">,</button>
         <button class="btn bg-orange-300" @click="onClickButton('=')">=</button>
       </div>
     </div>
