@@ -8,5 +8,6 @@
     <div class="mt-2"><RouterLink to="/chat-app" class="underline text-blue-500 hover:no-underline">Chat App</RouterLink></div>
     <div class="mt-2"><RouterLink to="/calculator" class="underline text-blue-500 hover:no-underline">Calculator</RouterLink></div>
     <div class="mt-2"><RouterLink to="/snake-game" class="underline text-blue-500 hover:no-underline">Snake Game</RouterLink></div>
+    <div class="mt-2"><RouterLink to="/tasks-management" class="underline text-blue-500 hover:no-underline">Tasks Management</RouterLink></div>
   </div>
 </template>
