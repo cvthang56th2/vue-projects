@@ -10,6 +10,7 @@ import TikTakToeGame from './pages/TikTakToeGame.vue'
 import StopWatch from './pages/StopWatch.vue'
 import ChatApp from './pages/ChatApp.vue'
 import Calculator from './pages/Calculator.vue'
+import SnakeGame from './pages/SnakeGame.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -23,6 +24,7 @@ const routes = [
   { path: '/stopwatch', component: StopWatch },
   { path: '/chat-app', component: ChatApp },
   { path: '/calculator', component: Calculator },
+  { path: '/snake-game', component: SnakeGame },
 ]
 const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
