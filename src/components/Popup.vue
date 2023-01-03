@@ -1,8 +1,10 @@
 <script setup>
 
-defineProps({
+const props = defineProps({
   modelValue: Boolean,
   hideButtons: Boolean,
+  showOnClickOutside: Boolean,
+  showOnClickOk: Boolean,
   title: String
 })
 const emit = defineEmits(['ok', 'update:modelValue'])
@@ -12,11 +14,13 @@ const close = () => {
 }
 const onOk = () =>{ 
   emit('ok')
-  close()
+  if (!props.showOnClickOk) {
+    close()
+  }
 }
 </script>
 <template>
-  <div v-if="modelValue" class="fixed bg-[rgba(0,0,0,0.5)] inset-0 flex justify-center items-center z-[2]" @click="close">
+  <div v-if="modelValue" class="fixed bg-[rgba(0,0,0,0.5)] inset-0 flex justify-center items-center z-[2]" @click="!showOnClickOutside && close()">
     <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col w-[80%] max-h-full" @click.stop>
       <div class="flex-1 overflow-y-auto">
         <slot name="title">

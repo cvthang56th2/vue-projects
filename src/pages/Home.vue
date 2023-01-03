@@ -10,5 +10,7 @@
     <div class="mt-2"><RouterLink to="/snake-game" class="underline text-blue-500 hover:no-underline">Snake Game</RouterLink></div>
     <div class="mt-2"><RouterLink to="/tasks-management" class="underline text-blue-500 hover:no-underline">Tasks Management</RouterLink></div>
     <div class="mt-2"><RouterLink to="/input-tags" class="underline text-blue-500 hover:no-underline">Input Tags</RouterLink></div>
+    <div class="mt-2"><RouterLink to="/manage-shop" class="underline text-blue-500 hover:no-underline">Manage Shop</RouterLink></div>
+    <div class="mt-2"><RouterLink to="/shop" class="underline text-blue-500 hover:no-underline">Shop Home</RouterLink></div>
   </div>
 </template>

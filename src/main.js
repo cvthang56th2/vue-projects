@@ -8,6 +8,9 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import VueSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
+import { Vue3ToggleButton } from 'vue3-toggle-button'
+import '../node_modules/vue3-toggle-button/dist/style.css'
+
 import './style.css'
 import App from './App.vue'
 import Home from './pages/Home.vue'
@@ -20,12 +23,16 @@ import Calculator from './pages/Calculator.vue'
 import SnakeGame from './pages/SnakeGame.vue'
 import TasksManagement from './pages/TasksManagement.vue'
 import InputTags from './pages/InputTags.vue'
+import ManageShop from './pages/Shop/Manage/Home.vue'
+import ViewShopHome from './pages/Shop/View/Home.vue'
+import ViewShopCategory from './pages/Shop/View/Category.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
 app.use(pinia)
 app.use(VueSweetalert2);
 app.component("v-select", VueSelect)
+app.component("v-toggle-button", Vue3ToggleButton)
 
 window.Swal = app.config.globalProperties.$swal;
 
@@ -40,6 +47,9 @@ const routes = [
   { path: '/snake-game', component: SnakeGame },
   { path: '/tasks-management', component: TasksManagement },
   { path: '/input-tags', component: InputTags },
+  { path: '/manage-shop', component: ManageShop },
+  { path: '/shop', component: ViewShopHome },
+  { path: '/shop/:category', component: ViewShopCategory },
 ]
 const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
