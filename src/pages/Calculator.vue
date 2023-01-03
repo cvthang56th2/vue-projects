@@ -162,7 +162,7 @@ onBeforeUnmount(() => {
         <div ref="resultRef" class="overflow-x-auto">
           {{ operator && arg2 ? arg2 : arg1 }}
         </div>
-        <span class="absolute bottom-[-2px] right-[16px] text-[20px]">{{ operator }}</span>
+        <span v-if="!(operator && arg2)" class="absolute bottom-[-2px] right-[16px] text-[20px]">{{ operator }}</span>
       </div>
       <div>
         <button class="btn bg-blue-100" @click="onClickButton('reset')">C</button>
