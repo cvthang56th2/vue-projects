@@ -19,6 +19,7 @@ import ChatApp from './pages/ChatApp.vue'
 import Calculator from './pages/Calculator.vue'
 import SnakeGame from './pages/SnakeGame.vue'
 import TasksManagement from './pages/TasksManagement.vue'
+import InputTags from './pages/InputTags.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -38,6 +39,7 @@ const routes = [
   { path: '/calculator', component: Calculator },
   { path: '/snake-game', component: SnakeGame },
   { path: '/tasks-management', component: TasksManagement },
+  { path: '/input-tags', component: InputTags },
 ]
 const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.

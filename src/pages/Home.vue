@@ -9,5 +9,6 @@
     <div class="mt-2"><RouterLink to="/calculator" class="underline text-blue-500 hover:no-underline">Calculator</RouterLink></div>
     <div class="mt-2"><RouterLink to="/snake-game" class="underline text-blue-500 hover:no-underline">Snake Game</RouterLink></div>
     <div class="mt-2"><RouterLink to="/tasks-management" class="underline text-blue-500 hover:no-underline">Tasks Management</RouterLink></div>
+    <div class="mt-2"><RouterLink to="/input-tags" class="underline text-blue-500 hover:no-underline">Input Tags</RouterLink></div>
   </div>
 </template>
