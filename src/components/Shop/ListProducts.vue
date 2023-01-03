@@ -1,12 +1,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import ProductServices from '../../firebase/product/product'
+import { useShopStore } from '../../stores/Shop/shop';
 import { sortCallBack } from '../../utils/utils';
 
 const props = defineProps({
   products: Array
 })
 
+const shopStore = useShopStore()
 const filterObj = ref({
   keyword: ''
 })
@@ -44,13 +46,13 @@ const onChangeSort = (value) => {
   let type = 'string'
   switch (value) {
     case 'Price Increase':
+      asc = false
       by = 'price'
       type = 'number'
       break;
     case 'Price Decrease':
       by = 'price'
       type = 'number'
-      asc = false
       break;
     case 'Name Ascending':
       asc = false
@@ -65,6 +67,20 @@ const onChangeSort = (value) => {
   sortData.value.by = by
   sortData.value.asc = asc
   sortData.value.type = type
+}
+const addToCart = productObj => {
+  shopStore.addToCart(productObj)
+}
+const removeFromCart = productId => {
+  Swal.fire({
+    title: 'Are you sure want to remove this product from carts?',
+    showCancelButton: true,
+    confirmButtonText: 'Remove',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      shopStore.removeFromCart(productId)
+    }
+  })
 }
 onMounted(() => {
   ProductServices.getCategories(data => {
@@ -100,6 +116,17 @@ onMounted(() => {
             </div>
             <div class="text-md text-center mb-2">
               ${{ productObj.price }}
+            </div>
+            <div class="text-center mb-3">
+              <button class="bg-gray-300 px-2 py-1 rounded-md" @click="addToCart(productObj)">
+                <template v-if="shopStore.carts[productObj.id]">
+                  Added ({{ shopStore.carts[productObj.id].quantity }})
+                  <span @click.stop="removeFromCart(productObj.id)" class="cursor-pointer bg-black text-white text-[10px] px-[4px] py-[3px] rounded-full">&#10005</span>
+                </template>
+                <span v-else>
+                  Add to cart
+                </span>
+              </button>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import {
   Timestamp
 } from 'firebase/firestore'
 import ldGet from 'lodash.get'
+import moment from 'moment'
 
 export const snapshotToArray = (snapshot) => {
   const data = [];
@@ -55,4 +56,22 @@ export const sortCallBack = (keyString, asc = true, type, getValueFunction) => {
     }
     return (compareValue1 > compareValue2 ? 1 : -1) * (asc ? 1 : -1)
   }
+}
+
+export const formatDate = (date, options = {}) => {
+  const { format = 'DD/MM/YYYY - hh:mm:ss', isGetFromNow = false } = options
+  if (
+    ['boolean', 'undefined'].indexOf(typeof date) === -1 &&
+    (!Number(date) || Number(date) > 24339600000)
+  ) {
+    const tmpDate = moment(date)
+    if (date && String(tmpDate) !== 'Invalid Date') {
+      if (isGetFromNow && moment().isSame(tmpDate, 'day')) {
+        return tmpDate.fromNow()
+      }
+      return tmpDate.format(format)
+    }
+  }
+
+  return date
 }

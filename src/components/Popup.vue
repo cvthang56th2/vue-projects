@@ -3,6 +3,7 @@
 const props = defineProps({
   modelValue: Boolean,
   hideButtons: Boolean,
+  hideCancel: Boolean,
   showOnClickOutside: Boolean,
   showOnClickOk: Boolean,
   title: String
@@ -29,7 +30,7 @@ const onOk = () =>{
         <slot></slot>
       </div>
       <div v-if="!hideButtons" class="flex justify-end mt-5">
-        <button class="font-bold py-1 px-3 rounded-md bg-gray-300 text-white mr-4" @click="close">Cancel</button>
+        <button v-if="!hideCancel" class="font-bold py-1 px-3 rounded-md bg-gray-300 text-white mr-4" @click="close">Cancel</button>
         <button class="font-bold py-1 px-3 rounded-md bg-green-400 text-white" @click="onOk">Ok</button>
       </div>
     </div>

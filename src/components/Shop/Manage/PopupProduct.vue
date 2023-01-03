@@ -79,7 +79,7 @@ const getCategories = () => {
       </div>
       <div class="mt-2">
         <label for="product-price">Price</label>
-        <textarea id="product-price" v-model="formData.price" type="number" class="border-2 w-full p-2 rounded-sm" placeholder="Enter Product price..."></textarea>
+        <input id="product-price" v-model="formData.price" type="number" class="border-2 w-full p-2 rounded-sm" placeholder="Enter Product price...">
       </div>
       <div class="mt-2">
         <label for="product-description">Description</label>
