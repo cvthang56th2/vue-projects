@@ -32,7 +32,8 @@ const cancelOrder = orderIndex => {
         </div>
         <Carts :carts="orderObj.carts" :total="orderObj.total" />
         <div class="py-2 flex justify-end">
-          <button @click="cancelOrder(oIndex)" class="text-sm bg-red-500 rounded-md px-2 text-white py-1">Cancel</button>  
+          <span v-if="orderObj.status === 'canceled'" class="bg-gray-500 text-white px-2">CANCLED</span>
+          <button v-else @click="cancelOrder(oIndex)" class="text-sm bg-red-500 rounded-md px-2 text-white py-1">Cancel</button>  
         </div>
       </div>
     </template>

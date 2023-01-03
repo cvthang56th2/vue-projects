@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import AuthServices from '../../firebase/auth/auth'
 
+const emit = defineEmits(['loged'])
+
 const registering = ref(false)
 const formLogin = ref({
   email: 'cvthang56th2@gmail.com',
@@ -21,6 +23,7 @@ const login = async () => {
       return
     }
     await AuthServices.loginWithEmail(email, password)
+    emit('loged')
   } catch (error) {
     alert(error)
   }
@@ -50,7 +53,7 @@ const register = async () => {
     <form
       v-if="registering"
       class="p-10 rounded-md border-4 border-gray-700"
-      @submit="register"
+      @submit.prevent="register"
     >
       <h1 class="mb-5 text-3xl">Register</h1>
       <div>
@@ -107,7 +110,7 @@ const register = async () => {
     <form
       v-else
       class="p-10 rounded-md border-4 border-gray-700"
-      @submit="login"
+      @submit.prevent="login"
     >
       <h1 class="mb-5 text-3xl">Login</h1>
       <div>

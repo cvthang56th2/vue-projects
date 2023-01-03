@@ -50,10 +50,12 @@ const onChangeQuantity = productId => {
         shopStore.removeFromCart(productId)
       } else {
         shopStore.carts[productId].inputQuantity = shopStore.carts[productId].quantity
+        shopStore.updateUserCart()
       }
     })
   } else {
     shopStore.carts[productId].quantity = quantity
+    shopStore.updateUserCart()
   }
 }
 </script>

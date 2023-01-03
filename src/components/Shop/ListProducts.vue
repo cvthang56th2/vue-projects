@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import ProductServices from '../../firebase/product/product'
 import { useShopStore } from '../../stores/Shop/shop';
 import { sortCallBack } from '../../utils/utils';
+import PopupProductDetail from './PopupProductDetail.vue';
 
 const props = defineProps({
   products: Array
@@ -40,6 +41,12 @@ const computedProducts = computed(() => {
   }
   return result
 })
+const showPopupProductDetail = ref(false)
+const selectedProduct = ref({})
+const viewProduct = productObj => {
+  selectedProduct.value = productObj
+  showPopupProductDetail.value = true
+}
 const onChangeSort = (value) => {
   let by = ''
   let asc = true
@@ -106,7 +113,7 @@ onMounted(() => {
         v-for="(productObj, pIndex) in computedProducts" :key="`product-${pIndex}`"
         class="w-full md:w-1/2 lg:w-1/4 px-2 mb-4"
       >
-        <div class="border-2 shadow-lg rounded-lg">
+        <div class="border-2 rounded-lg cursor-pointer shadow-md hover:shadow-xl" @click="viewProduct(productObj)">
           <div class="w-full pb-[320px] relative overflow-hidden">
             <img :src="productObj.image || 'https://via.placeholder.com/1000'" :alt="productObj.name" class="absolute inset-0 object-cover h-full w-full">
           </div>
@@ -132,5 +139,6 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    <PopupProductDetail v-model="showPopupProductDetail" :product="selectedProduct" />
   </div>
 </template>
