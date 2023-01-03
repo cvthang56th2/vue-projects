@@ -1,6 +1,23 @@
 <script setup>
 import { nextTick, ref } from 'vue';
 
+const allKeyboardKeys = [
+  '/',
+  '7',
+  '8',
+  '9',
+  '*',
+  '4',
+  '5',
+  '6',
+  '-',
+  '1',
+  '2',
+  '3',
+  '+',
+  '0',
+  '.',
+]
 const arg1 = ref(0)
 const arg2 = ref('')
 const resultRef = ref(null)
@@ -21,7 +38,7 @@ const computeValue = (button, value = '') => {
       return `0${button}`
     }
   }
-  return `${value}${button}`
+  return Number(`${value}${button}`)
 }
 const onClickNumber = button => {
   if (isGetResult.value) {
@@ -118,14 +135,28 @@ const onClickButton = button => {
       break;
   }
 }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    onClickButton('reset')
+    return
+  }
+  if (e.key === 'Enter') {
+    onClickButton('=')
+    return
+  }
+  if (allKeyboardKeys.includes(e.key)) {
+    onClickButton(e.key)
+  }
+})
 </script>
 <template>
   <div class="h-full flex flex-col items-center justify-center">
     <div class="w-[230px] h-[320px] bg-blue-200 rounded-lg overflow-hidden">
-      <div class="h-[95px] text-[50px] justify-end flex items-center px-2">
+      <div class="h-[95px] text-[50px] justify-end flex items-center px-2 relative">
         <div ref="resultRef" class="overflow-x-auto">
           {{ operator && arg2 ? arg2 : arg1 }}
         </div>
+        <span class="absolute bottom-[-2px] right-[16px] text-[20px]">{{ operator }}</span>
       </div>
       <div>
         <button class="btn bg-blue-100" @click="onClickButton('reset')">C</button>
