@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const map = []
 const MAP_WIDTH = 10
@@ -109,7 +109,7 @@ const checkIsSnakeCell = (rIndex, cIndex) => {
   }
   return false
 }
-document.addEventListener('keydown', e => {
+const onKeyDown = e => {
   switch (e.key) {
     case 'Enter':
       if (gameIsRunning.value) {
@@ -143,6 +143,12 @@ document.addEventListener('keydown', e => {
       }
       break
   }
+}
+onMounted(() => {
+  document.addEventListener('keydown', onKeyDown)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onKeyDown)
 })
 </script>
 <template>

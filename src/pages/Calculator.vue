@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 
 const allKeyboardKeys = [
   '/',
@@ -135,7 +135,7 @@ const onClickButton = button => {
       break;
   }
 }
-document.addEventListener('keydown', e => {
+const onKeyDown = e => {
   if (e.key === 'Escape') {
     onClickButton('reset')
     return
@@ -147,6 +147,12 @@ document.addEventListener('keydown', e => {
   if (allKeyboardKeys.includes(e.key)) {
     onClickButton(e.key)
   }
+}
+onMounted(() => {
+  document.addEventListener('keydown', onKeyDown)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onKeyDown)
 })
 </script>
 <template>
