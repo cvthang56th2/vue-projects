@@ -25,7 +25,6 @@ import TasksManagement from './pages/TasksManagement.vue'
 import InputTags from './pages/InputTags.vue'
 import ManageShop from './pages/Shop/Manage/Home.vue'
 import ViewShopHome from './pages/Shop/View/Home.vue'
-import ViewShopCategory from './pages/Shop/View/Category.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -49,7 +48,6 @@ const routes = [
   { path: '/input-tags', component: InputTags },
   { path: '/manage-shop', component: ManageShop },
   { path: '/shop', component: ViewShopHome },
-  { path: '/shop/:category', component: ViewShopCategory },
 ]
 const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.

@@ -2,15 +2,16 @@
 import { onMounted, ref } from 'vue';
 import ListProducts from '../../../components/Shop/ListProducts.vue';
 import Navbar from '../../../components/Shop/Navbar.vue';
+import ProductServices from '../../../firebase/product/product'
 
 const products = ref([])
-const getProducts = category => {
-  const apiUrl = category ? `https://fakestoreapi.com/products/category/${category}` : 'https://fakestoreapi.com/products'
-  fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
-      products.value = data
-    })
+const getProducts = categoryId => {
+  ProductServices.getProducts(data => {
+    products.value = (data || [])
+    if (categoryId) {
+      products.value = products.value.filter(e => e.categoryId === categoryId)
+    }
+  })
 }
 onMounted(() => {
   getProducts()

@@ -91,7 +91,7 @@ onMounted(() => {
     </div>
     <div class="flex items-center">
       <label for="filter-products-category" class="mr-2">Category</label>
-      <v-select id="filter-products-category" appendToBody v-model="filterObj.categoryId" :options="categories" label="name" :reduce="e => e.id"></v-select>
+      <v-select id="filter-products-category" appendToBody v-model="filterObj.categoryId" :options="categories" label="name" :reduce="e => e.id" class="min-w-[150px]"></v-select>
     </div>
   </div>
   <div class="flex font-semibold border-b-2 py-1 items-center">
