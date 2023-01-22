@@ -25,6 +25,7 @@ import TasksManagement from './pages/TasksManagement.vue'
 import InputTags from './pages/InputTags.vue'
 import ManageShop from './pages/Shop/Manage/Home.vue'
 import ViewShopHome from './pages/Shop/View/Home.vue'
+import Quiz from './pages/Quiz.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -47,6 +48,7 @@ const routes = [
   { path: '/tasks-management', component: TasksManagement },
   { path: '/input-tags', component: InputTags },
   { path: '/manage-shop', component: ManageShop },
+  { path: '/quiz', component: Quiz },
   { path: '/shop', component: ViewShopHome },
 ]
 const router = createRouter({

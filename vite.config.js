@@ -6,5 +6,7 @@ export default defineConfig({
   define: {
     'process.env': envJson
   },
-  plugins: [vue()]
+  plugins: [vue({
+    reactivityTransform: true
+  })]
 })
